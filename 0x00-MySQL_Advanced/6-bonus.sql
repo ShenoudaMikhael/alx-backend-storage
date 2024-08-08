@@ -18,4 +18,5 @@ VALUES (
         WHERE `name` = project_name,
             score
     );
-END // DELIMITER;
+END // 
+DELIMITER;
