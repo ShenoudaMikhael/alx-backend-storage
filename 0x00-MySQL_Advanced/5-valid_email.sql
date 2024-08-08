@@ -4,4 +4,4 @@ CREATE TRIGGER invalidate_email
 AFTER UPDATE ON users.email FOR EACH ROW
 UPDATE users
 SET valid_email = 0
-WHERE email = U.email;
+WHERE email = NEW.email;
