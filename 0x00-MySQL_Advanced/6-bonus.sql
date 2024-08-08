@@ -1,7 +1,7 @@
 -- a SQL script that creates a stored procedure AddBonus
 -- that adds a new correction for a student.
 DELIMITER // CREATE PROCEDURE AddBonus(user_id, project_name, score) BEGIN
-INSERT INTO `project` (project_name)
+INSERT INTO `projects` (project_name)
 SELECT `name`
 FROM DUAL
 WHERE NOT EXISTS (
