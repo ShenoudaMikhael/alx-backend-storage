@@ -4,9 +4,8 @@ from pymongo import MongoClient
 
 
 def log_stats():
-    """ log_stats.
-    """
-    client = MongoClient('mongodb://127.0.0.1:27017')
+    """log_stats."""
+    client = MongoClient("mongodb://127.0.0.1:27017")
     logs_collection = client.logs.nginx
     total = logs_collection.count_documents({})
     get = logs_collection.count_documents({"method": "GET"})
@@ -14,8 +13,7 @@ def log_stats():
     put = logs_collection.count_documents({"method": "PUT"})
     patch = logs_collection.count_documents({"method": "PATCH"})
     delete = logs_collection.count_documents({"method": "DELETE"})
-    path = logs_collection.count_documents(
-        {"method": "GET", "path": "/status"})
+    path = logs_collection.count_documents({"method": "GET", "path": "/status"})
     print("{} logs".format(total))
     print("Methods:")
     print("\tmethod GET: {}".format(get))
@@ -26,13 +24,15 @@ def log_stats():
     print("{} status check".format(path))
     print("IPs:")
     ips = logs_collection.aggregate(
-        [{"$group": {"_id": "$ip", "count": {"$sum": 1}}},
-         {"$sort": {"count": -1}}])
+        [
+            {"$group": {"_id": "$ip", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}}]
+    )
     i = 0
     for _ in ips:
         if i == 10:
             break
-        print("\t{s.get('_id')}: {s.get('count')}")
+        print("\t{}: {}".format(_.get("_id"), _.get("count")))
         i += 1
 
 
