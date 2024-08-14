@@ -9,7 +9,7 @@ import redis
 redis_instance = redis.Redis()
 
 
-def data_cacher(method: Callable) -> Callable:
+def data_cache(method: Callable) -> Callable:
     """data_cacher function"""
 
     @wraps(method)
@@ -27,6 +27,7 @@ def data_cacher(method: Callable) -> Callable:
     return wrapper
 
 
+@data_cache
 def get_page(url: str) -> str:
     """get_page function"""
     re = requests.get(url, timeout=30)
