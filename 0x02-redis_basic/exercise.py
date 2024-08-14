@@ -17,5 +17,5 @@ class Cache:
         """store function"""
         key = str(uuid.uuid4())
 
-        self._redis.mset({key: data})
+        self._redis.set(key, data)
         return key
