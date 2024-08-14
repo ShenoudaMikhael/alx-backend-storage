@@ -10,6 +10,7 @@ def count_calls(method: callable) -> Callable:
     """count_calls function"""
     @wraps(method)
     def wrapper(self, *args, **kwds):
+        """wrapper method"""
         if isinstance(self._redis, redis.Redis):
             self._redis.incr(method.__qualname__)
         return method(self, *args, **kwds)
