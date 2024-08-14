@@ -32,18 +32,3 @@ def get_page(url: str) -> str:
     """get_page function"""
     re = requests.get(url, timeout=20)
     return re.text
-
-
-if __name__ == "__main__":
-    get_page("http://www.google.com")
-    print(int(redis_instance.get("count:http://www.google.com")))
-    get_page("http://www.google.com")
-    print(int(redis_instance.get("count:http://www.google.com")))
-    get_page("http://www.google.com")
-    print(int(redis_instance.get("count:http://www.google.com")))
-    get_page("http://www.google.com")
-    print(int(redis_instance.get("count:http://www.google.com")))
-    get_page("http://www.google.com")
-    print(int(redis_instance.get("count:http://www.google.com")))
-    get_page("http://www.google.com")
-    print(int(redis_instance.get("count:http://www.google.com")))
