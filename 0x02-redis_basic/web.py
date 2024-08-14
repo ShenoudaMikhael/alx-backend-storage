@@ -33,5 +33,5 @@ def data_cache(method):
 @data_cache
 def get_page(url: str) -> str:
     """get_page function"""
-    re = requests.get(url)
+    re = requests.get(url, timeout=120)
     return re.text
