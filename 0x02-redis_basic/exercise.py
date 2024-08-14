@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """exercise"""
+import uuid
 from typing import Union
 import redis
-import uuid
 
 
 class Cache:
