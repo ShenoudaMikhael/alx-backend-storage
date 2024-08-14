@@ -7,6 +7,7 @@ from functools import wraps
 
 
 def count_calls(method: callable) -> Callable:
+    """count_calls function"""
     @wraps(method)
     def wrapper(self, *args, **kwds):
         if isinstance(self._redis, redis.Redis):
