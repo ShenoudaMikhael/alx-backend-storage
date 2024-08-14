@@ -29,5 +29,5 @@ def data_cacher(method: Callable) -> Callable:
 
 def get_page(url: str) -> str:
     """get_page function"""
-    re = requests.get(url)
+    re = requests.get(url, timeout=30)
     return re.text
