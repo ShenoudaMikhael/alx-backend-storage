@@ -6,6 +6,29 @@ from functools import wraps
 import redis
 
 
+def replay(fn: Callable) -> None:
+    """replay function"""
+    if fn is None or not hasattr(fn, '__self__'):
+        return
+    redis_store = getattr(fn.__self__, '_redis', None)
+    if not isinstance(redis_store, redis.Redis):
+        return
+    key_in = '{}:inputs'.format(fn.__qualname__)
+    key_out = '{}:outputs'.format(fn.__qualname__)
+    fn_ccount = 0
+    if redis_store.exists(fn.__qualname__) != 0:
+        fn_ccount = int(redis_store.get(fn.__qualname__))
+    print('{} was called {} times:'.format(fn.__qualname__, fn_ccount))
+    f_inputs = redis_store.lrange(key_in, 0, -1)
+    f_outputs = redis_store.lrange(key_out, 0, -1)
+    for finput, foutput in zip(f_inputs, f_outputs):
+        print('{}(*{}) -> {}'.format(
+            fn.__qualname__,
+            finput.decode("utf-8"),
+            foutput,
+        ))
+
+
 def count_calls(method: Callable) -> Callable:
     """count_calls function"""
     @wraps(method)
