@@ -14,15 +14,19 @@ def data_cache(method: Callable) -> Callable:
 
     @wraps(method)
     def wrapper(url) -> str:
-        """wrapper function"""
-        redis_instance.incr("count:{}".format(url))
-        result = redis_instance.get("result:{}".format(url))
-        if result:
-            return result.decode("utf-8")
-        result = method(url)
-        redis_instance.set("count:{}".format(url), 0)
-        redis_instance.setex("result:{}".format(url), 10, result)
-        return result
+        """wrapper method"""
+        ckey = "cached:{}".format(url)
+        cfata = redis_instance.get(ckey)
+        if cfata:
+            return cfata.decode("utf-8")
+
+        counter = "count:{}".format(url)
+        text = method(url)
+
+        redis_instance.incr(counter)
+        redis_instance.set(ckey, text)
+        redis_instance.expire(ckey, 10)
+        return text
 
     return wrapper
 
