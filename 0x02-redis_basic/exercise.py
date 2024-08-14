@@ -6,7 +6,7 @@ import redis
 from functools import wraps
 
 
-def count_calls(method: callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """count_calls function"""
     @wraps(method)
     def wrapper(self, *args, **kwds):
