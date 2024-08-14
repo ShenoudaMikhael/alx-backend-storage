@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """web.py"""
 from functools import wraps
-from typing import Callable
 import requests
 import redis
 
@@ -9,11 +8,11 @@ import redis
 redis_instance = redis.Redis()
 
 
-def data_cache(method: Callable) -> Callable:
+def data_cache(method):
     """data_cacher function"""
 
     @wraps(method)
-    def wrapper(url) -> str:
+    def wrapper(url):
         """wrapper method"""
         ckey = "cached:{}".format(url)
         cfata = redis_instance.get(ckey)
